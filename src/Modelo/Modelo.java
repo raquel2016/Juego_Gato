@@ -135,7 +135,9 @@ public class Modelo {
         int tam = this.tableroMatriz.length;
         for (int i = 0; i < tam; i++) {
             for (int j = 0; j < tam; j++) {
-                return(this.tableroMatriz[i][j].equals(""));  
+                if (this.tableroMatriz[i][j].equals("")) {
+                    return false;
+                }
             }
         }
         return true;
