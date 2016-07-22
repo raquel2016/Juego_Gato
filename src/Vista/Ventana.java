@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
  */
 public class Ventana extends javax.swing.JFrame implements ActionListener {
 
-  
     public Ventana(String titulo, ControlAplicacion nuevoGestor) {
         super(titulo);
         this.control = nuevoGestor;
@@ -167,8 +166,7 @@ public class Ventana extends javax.swing.JFrame implements ActionListener {
 
     }
     
-    private void mensaje(String s)
-    {
+    private void mensaje(String s){
         JOptionPane.showMessageDialog(null, "El ganador es " + s , "Ganador", JOptionPane.INFORMATION_MESSAGE);
         limpiar();
         System.exit(0);
@@ -194,10 +192,6 @@ public class Ventana extends javax.swing.JFrame implements ActionListener {
     }
 
     
-    
-    
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     public javax.swing.JButton pos1;

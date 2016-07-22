@@ -9,10 +9,9 @@ public class Modelo {
     public Modelo() {
     }
 
+    //Según la casilla retorna el valor a colocar en el tablero
     public String movimiento(int pos) {
-
         String marca;
-
         if (jugador == 1) {
             marca = marcarPosicion(pos, this.equiz);
             jugador = 2;
@@ -23,7 +22,6 @@ public class Modelo {
             }
 
         } else {
-
             marca = marcarPosicion(pos, this.circulo);
             jugador = 1;
             if (obtenerGanador(this.tableroMatriz, this.circulo)) {
@@ -31,16 +29,14 @@ public class Modelo {
             } else if (empate()) {
                 this.ganador = 3;
             }
-
         }
-
         return marca;
     }
 
+    
+    //Verifica que la casilla seleccionada este disponible
     public String marcarPosicion(int pos, String marca) {
-
         String aux_marca = "";
-
         switch (pos) {
             case 1:
                 aux_marca = validarPosicion(0, 0, marca);
@@ -70,13 +66,10 @@ public class Modelo {
                 aux_marca = validarPosicion(2, 2, marca);
                 break;
         }
-
         return aux_marca;
     }
 
-    //Verifica que la casilla seleccionada este disponible
     private String validarPosicion(int i, int j, String marca) {
-
         String aux = "";
         this.bandera_error = false;
 
@@ -87,7 +80,6 @@ public class Modelo {
             aux = this.tableroMatriz[i][j];
             this.bandera_error = true;
         }
-
         return aux;
     }
 
@@ -95,7 +87,8 @@ public class Modelo {
     public boolean obtenerGanador(String gato[][], String marca) {
 
         int tamanio = gato.length;
-
+        
+        //Por columnas
         for (int j = 0; j < tamanio; j++) {
             int cont = 0;
             for (int i = 0; i < tamanio; i++) {
@@ -107,7 +100,8 @@ public class Modelo {
                 }
             }
         }
-
+        
+        //Por filas
         for (int i = 0; i < tamanio; i++) {
             int cont = 0;
             for (int j = 0; j < tamanio; j++) {
@@ -120,10 +114,10 @@ public class Modelo {
             }
         }
 
+        //Por Diagonales
         if (tableroMatriz[0][0].equals(marca) && tableroMatriz[1][1].equals(marca) && tableroMatriz[2][2].equals(marca)) {
             return true;
         }
-
         if (tableroMatriz[1][1].equals(marca) && tableroMatriz[0][2].equals(marca) && tableroMatriz[2][0].equals(marca)) {
             return true;
         }
@@ -193,14 +187,10 @@ public class Modelo {
     }
 
     private int ganador = 0;
+    private int jugador = 1;
     private String equiz = "X";
     private String circulo = "O";
     private boolean bandera_error = false;
-    private String tableroMatriz[][] = {{"", "", ""},
-    {"", "", ""},
-    {"", "", ""}
-    };
-
-    private int jugador = 1;
-
+    private String tableroMatriz[][] = {{"", "", ""},{"", "", ""},{"", "", ""}};
+    
 }
