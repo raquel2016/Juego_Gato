@@ -1,14 +1,21 @@
 
 package Vista;
 
+import Control.ControlAplicacion;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Raquel Lugo
  */
-public class Ventana extends javax.swing.JFrame {
+public class Ventana extends javax.swing.JFrame implements ActionListener {
 
   
-    public Ventana() {
+    public Ventana(String titulo, ControlAplicacion nuevoGestor) {
+        super(titulo);
+        this.control = nuevoGestor;
         initComponents();
     }
 
@@ -116,14 +123,80 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_pos2ActionPerformed
 
    
-    public static void main(String args[]) {
-        
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Ventana().setVisible(true);
-            }
-        });
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+      Object boton = ae.getSource();
+        if( control.getGanador()== 0 )
+        {
+        if( boton == pos1)
+            this.pos1.setText( control.movimiento(1));
+        else if(boton == this.pos2)
+            this.pos2.setText( control.movimiento(2) );
+        else if(boton == this.pos3)
+            this.pos3.setText( control.movimiento(3) );
+        else if(boton == this.pos4)
+            this.pos4.setText( control.movimiento(4) );
+        else if(boton == this.pos5)
+            this.pos5.setText( control.movimiento(5) );
+        else if(boton == this.pos6)
+            this.pos6.setText( control.movimiento(6) );
+        else if(boton == this.pos7)
+            this.pos7.setText( control.movimiento(7) );
+        else if(boton == this.pos8)
+            this.pos8.setText( control.movimiento(8) );
+        else if(boton == this.pos9)
+            this.pos9.setText( control.movimiento(9) );
+        if( control.casillaOcupada())
+            JOptionPane.showMessageDialog(null, "Casilla marcada \n Perdiste tu turno");    
+
+        }
+
+        switch (control.getGanador()) {
+            case 1:
+                mensaje(" 'X' ");
+                break;
+            case 2:
+                mensaje(" 'O' ");
+                break;
+            case 3:
+                mensaje(" 'Es un empate' ");
+                break;
+            default:
+                break;
+        }
+
     }
+    
+    private void mensaje(String s)
+    {
+        JOptionPane.showMessageDialog(null, "El ganador es " + s , "Ganador", JOptionPane.INFORMATION_MESSAGE);
+        limpiar();
+        System.exit(0);
+    }
+    
+    private void limpiar(){
+      control.limpiarTablero();
+      control.setError(false);
+      control.setGanador(0);
+      control.setJugador(1);
+    }
+    
+    public void iniciar_vista(){
+        this.pos1.addActionListener(this);
+        this.pos2.addActionListener(this);
+        this.pos3.addActionListener(this);
+        this.pos4.addActionListener(this);
+        this.pos5.addActionListener(this);
+        this.pos6.addActionListener(this);
+        this.pos7.addActionListener(this);
+        this.pos8.addActionListener(this);
+        this.pos9.addActionListener(this);
+    }
+
+    
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
@@ -137,4 +210,7 @@ public class Ventana extends javax.swing.JFrame {
     public javax.swing.JButton pos8;
     public javax.swing.JButton pos9;
     // End of variables declaration//GEN-END:variables
+
+   public final ControlAplicacion control;
+
 }

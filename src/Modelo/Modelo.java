@@ -1,7 +1,5 @@
 package Modelo;
 
-import java.util.Observable;
-
 /**
  *
  * @author Raquel Lugo
@@ -9,23 +7,20 @@ import java.util.Observable;
 public class Modelo {
 
     public Modelo() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                tableroMatriz[i][j] = "";
-            }
-        }
     }
 
     public String movimiento(int pos) {
 
-        String marca = "";
+        String marca;
 
         if (jugador == 1) {
             marca = marcarPosicion(pos, this.equiz);
             jugador = 2;
             if (obtenerGanador(this.tableroMatriz, this.equiz)) {
                 this.ganador = 1;
-            } //falta cuando no hay gane, empate
+            } else if (empate()) {
+                this.ganador = 3;
+            }
 
         } else {
 
@@ -33,7 +28,9 @@ public class Modelo {
             jugador = 1;
             if (obtenerGanador(this.tableroMatriz, this.circulo)) {
                 this.ganador = 2;
-            } //falta cuando no hay gane, empate
+            } else if (empate()) {
+                this.ganador = 3;
+            }
 
         }
 
@@ -46,35 +43,35 @@ public class Modelo {
 
         switch (pos) {
             case 1:
-                validarPosicion(0, 0, marca);
+                aux_marca = validarPosicion(0, 0, marca);
                 break;
             case 2:
-                validarPosicion(0, 0, marca);
+                aux_marca = validarPosicion(0, 1, marca);
                 break;
             case 3:
-                validarPosicion(0, 0, marca);
+                aux_marca = validarPosicion(0, 2, marca);
                 break;
             case 4:
-                validarPosicion(0, 0, marca);
+                aux_marca = validarPosicion(1, 0, marca);
                 break;
             case 5:
-                validarPosicion(0, 0, marca);
+                aux_marca = validarPosicion(1, 1, marca);
                 break;
             case 6:
-                validarPosicion(0, 0, marca);
+                aux_marca = validarPosicion(1, 2, marca);
                 break;
             case 7:
-                validarPosicion(0, 0, marca);
+                aux_marca = validarPosicion(2, 0, marca);
                 break;
             case 8:
-                validarPosicion(0, 0, marca);
+                aux_marca = validarPosicion(2, 1, marca);
                 break;
             case 9:
-                validarPosicion(0, 0, marca);
+                aux_marca = validarPosicion(2, 2, marca);
                 break;
         }
 
-        return marca;
+        return aux_marca;
     }
 
     //Verifica que la casilla seleccionada este disponible
@@ -123,34 +120,24 @@ public class Modelo {
             }
         }
 
-        for (int i = 0; i < tamanio; i++) {
-            int cont = 0;
-            for (int j = 0; j < tamanio; j++) {
-                if (i == j) {
-                    if (gato[i][j].equals(marca)) {
-                        cont++;
-                    }
-                    if (cont == 3) {
-                        return true;
-                    }
-                }
-            }
+        if (tableroMatriz[0][0].equals(marca) && tableroMatriz[1][1].equals(marca) && tableroMatriz[2][2].equals(marca)) {
+            return true;
         }
 
-        for (int i = tamanio; i > 0; i--) {
-            int cont = 0;
-            for (int j = tamanio; j > 0; j--) {
-                if (i == j) {
-                    if (gato[i][j].equals(marca)) {
-                        cont++;
-                    }
-                    if (cont == 3) {
-                        return true;
-                    }
-                }
-            }
+        if (tableroMatriz[1][1].equals(marca) && tableroMatriz[0][2].equals(marca) && tableroMatriz[2][0].equals(marca)) {
+            return true;
         }
 
+        return false;
+    }
+
+    private boolean empate() {
+        int tam = this.tableroMatriz.length;
+        for (int i = 0; i < tam; i++) {
+            for (int j = 0; j < tam; j++) {
+                return(this.tableroMatriz[i][j].equals(""));  
+            }
+        }
         return true;
     }
 
@@ -174,7 +161,7 @@ public class Modelo {
         this.circulo = circulo;
     }
 
-    public boolean isBandera_error() {
+    public boolean getBandera_error() {
         return bandera_error;
     }
 
@@ -194,11 +181,24 @@ public class Modelo {
         return circulo;
     }
 
+    public void limpiarTablero() {
+        int tam = tableroMatriz.length;
+        for (int i = 0; i < tam; i++) {
+            for (int j = 0; j < tam; j++) {
+                tableroMatriz[i][j] = "";
+            }
+        }
+    }
+
     private int ganador = 0;
     private String equiz = "X";
     private String circulo = "O";
     private boolean bandera_error = false;
-    private String tableroMatriz[][];
+    private String tableroMatriz[][] = {{"", "", ""},
+    {"", "", ""},
+    {"", "", ""}
+    };
+
     private int jugador = 1;
 
 }

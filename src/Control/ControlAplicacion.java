@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Control;
 
 import Modelo.Modelo;
@@ -17,8 +13,37 @@ public class ControlAplicacion {
     }
 
     public ControlAplicacion() {
-        this(new Modelo());
+        this.datos = new Modelo();
     }
+    
+    public int getGanador(){
+        return datos.getGanador();
+    }
+    
+    public boolean casillaOcupada(){
+       return datos.getBandera_error();
+    }
+    
+    public String movimiento(int posicion){
+       return datos.movimiento(posicion);
+    }
+    
+    public void limpiarTablero(){
+       datos.limpiarTablero();
+    }
+    
+    public void setError(boolean valor){
+       datos.setBandera_error(valor);
+    }
+    
+    public void setGanador(int valor){
+       datos.setGanador(valor);
+    }
+    
+    public void setJugador(int valor){
+       datos.setJugador(valor);
+    }
+    
     
     private Modelo datos;
     
